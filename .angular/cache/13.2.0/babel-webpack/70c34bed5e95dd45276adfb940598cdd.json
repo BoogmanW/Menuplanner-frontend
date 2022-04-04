@@ -1,0 +1,1 @@
+{"ast":null,"code":"// TODO ADD MENUITEM\nexport class Day {\n  constructor(date) {\n    this.date = date;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

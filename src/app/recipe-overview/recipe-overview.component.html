@@ -1,0 +1,87 @@
+<!-- bovenaan links info, rechts form om nieuw gerecht aan te maken. 
+     eronder dan een tabel met alle gerechten (eventueel met paginas)-->
+
+<div class="py-8 px-32">
+    <div class="grid grid-cols-3 gap-6">
+        <div class="col-span-1 inline-block">
+            <h2 class="text-xl font-semibold text-gray-700">Nieuw Gerecht</h2>
+            <p class="text-gray-700 pl-2">Vul hier de gegevens van het nieuwe gerecht in.</p>
+        </div>
+        <div class="col-span-2 inline-block bg-white rounded-xl overflow-hidden border shadow">
+            <form [formGroup]="createMenuItemForm" (ngSubmit)="onCreateMenuItemFormSubmit()">
+                <div class="p-4">
+                    <div class="m-2 mb-4">
+                        <label class="pl-2 block font-medium text-sm text-gray-700" for="title">Titel</label>
+                        <input class="px-2 py-1 border w-1/2 border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"  type="text" formControlName="title">
+                    </div>
+
+                    <div class="m-2 mb-4">
+                        <label class="pl-2 block font-medium text-sm text-gray-700" for="description">Beschrijving</label>
+                        <input class="px-2 py-1 border w-1/2 border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm" type="text" formControlName="description">
+                    </div>
+
+                    <div class="m-2 mb-4">
+                        <label class="block font-medium text-sm text-gray-700" for="categories">Categorie</label>
+                        <select class="px-2 py-1 border w-1/2 border-gray-300 rounded-md shadow-sm" formControlName="category">
+                            <option>Pasta</option>
+                            <option>Rijst</option>
+                            <option>Aardappelen</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="bg-gray-50 py-4 px-4 flex justify-end">
+                    <button class="mr-4 px-4 py-2 bg-red-700 hover:bg-red-800 text-white rounded font-semibold uppercase text-xs tracking-widest transition ease-in-out duration-150" type="button" (click)="createMenuItemForm.reset()">Annuleren</button>
+                    <button class="mr-4 px-4 py-2 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white rounded font-semibold uppercase text-xs tracking-widest transition ease-in-out duration-150" type="submit" [disabled]="createMenuItemForm.invalid">Opslaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="mt-8">
+        <div class="rounded-xl border shadow overflow-auto">
+            <form [formGroup]="editMenuItemForm" (ngSubmit)="onEditMenuItemFormSubmit()">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Beschrijving</th>
+                        <th>Categorie</th>
+                        <th class="w-1/4">Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let menuItem of menuItems">
+                        <ng-container *ngIf="!editingMenuItem || menuItem.id !== editingMenuItem.id">
+                            <td>{{menuItem.title}}</td> 
+                            <td>{{menuItem.description}}</td>
+                            <td>{{menuItem.category}}</td>
+                            <td>
+                                <button class="px-4 py-2 m-2 bg-gray-800 hover:bg-gray-700 text-white rounded font-semibold uppercase text-xs tracking-widest transition ease-in-out duration-150" type="button" (click)="onEditMenuItemClicked(menuItem)">Aanpassen</button>
+                                <button class="px-4 py-2 m-2 bg-red-700 hover:bg-red-800 text-white rounded font-semibold uppercase text-xs tracking-widest transition ease-in-out duration-150" type="button" (click)="onDeleteMenuItemClicked(menuItem)">Verwijderen</button>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="editingMenuItem && editingMenuItem.id === menuItem.id">
+                            <td>
+                                <input class="px-2 py-1 border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm" id="description" type="text" formControlName="title">
+                            </td> 
+                            <td>
+                                <input class="px-2 py-1 border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm" id="description" type="text" formControlName="description">
+                            </td>
+                            <td>
+                                <select id="categories" class="px-2 py-1 border border-gray-300 rounded-md shadow-sm" formControlName="category">
+                                    <option>Pasta</option>
+                                    <option>Rijst</option>
+                                    <option>Aardappelen</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="px-4 py-2 m-2 bg-gray-800 hover:bg-gray-700 text-white rounded font-semibold disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed uppercase text-xs tracking-widest transition ease-in-out duration-150" type="submit" [disabled]="editMenuItemForm.invalid">Opslaan</button>
+                                <button class="px-4 py-2 m-2 bg-red-700 hover:bg-red-800 text-white rounded font-semibold uppercase text-xs tracking-widest transition ease-in-out duration-150" type="button" (click)="editingMenuItem = undefined">Annuleren</button>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+table {
+    @apply table-auto w-full border-collapse;
+}
+
+thead {
+    @apply bg-gray-50 text-gray-500 font-semibold;
+}
+
+th {
+    @apply p-4;
+}
+
+tbody {
+    @apply bg-white text-center;
+}
+
+tr {
+    @apply border-b last:border-0;
+}
+
+td {
+    @apply p-0;
+}

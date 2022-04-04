@@ -1,0 +1,11 @@
+<div class="px-4 py-6">
+    <div class="flex items-center pb-6 px-4">
+        <app-chevron-left class="text-blue-900" (click)="onPreviousWeekClicked()"></app-chevron-left>
+        <h2 class="px-4 font-semibold text-2xl align-bottom text-blue-900">Week {{selectedWeekNumber}}</h2>
+        <app-chevron-right class="text-blue-900" (click)="onNextWeekClicked()"></app-chevron-right>
+
+    </div>
+    <div class="flex">
+            <app-day *ngFor="let day of week" [day]="day" class="flex-1"></app-day>
+    </div>
+</div>
