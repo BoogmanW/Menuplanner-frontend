@@ -1,1 +1,0 @@
-{"ast":null,"code":"export class MenuItem {\n  constructor(pTitle, pDescription, pCategory) {\n    this.title = pTitle;\n    this.description = pDescription;\n    this.category = pCategory;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

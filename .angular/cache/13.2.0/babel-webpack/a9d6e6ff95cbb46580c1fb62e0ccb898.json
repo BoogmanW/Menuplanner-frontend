@@ -1,1 +1,0 @@
-{"ast":null,"code":"export class MenuItem {\n  constructor(pID, pTitle, pDescription, pCategory) {\n    // todo check if this can be made automatically from json (when getting from api)\n    this.id = pID;\n    this.title = pTitle;\n    this.description = pDescription;\n    this.category = pCategory;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}
