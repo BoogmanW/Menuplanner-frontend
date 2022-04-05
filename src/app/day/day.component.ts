@@ -1,5 +1,4 @@
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { DayService } from '../services/day.service';
 import { MenuItemService } from '../services/menu-item.service';
 import { UtilitiesService } from '../services/utilities.service';
@@ -11,28 +10,30 @@ import { MenuItem } from '../shared/models/menu-item';
   templateUrl: './day.component.html',
   styleUrls: ['./day.component.css']
 })
-export class DayComponent implements OnInit {
+export class DayComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   @Input() day?: Day;
 
-  @ViewChildren('menuItemPickerFilterField') menuItemPickerFilterField? : QueryList<ElementRef>
+  @ViewChild('menuItemPickerFilterField', {static: false}) menuItemPickerFilterField? : ElementRef
 
   menuItemPickerOpened = false;
   menuItems : MenuItem[] = [];
 
   constructor(private menuItemService: MenuItemService, private dayService: DayService, private utilitiesService : UtilitiesService) { }
+  
+  ngAfterViewInit(): void {
+    console.log("after view init")
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.menuItemPickerFilterField) this.menuItemPickerFilterField.nativeElement.focus()
+  }
 
   ngOnInit(): void {
     this.menuItemService.menuItemsChanged$.subscribe(menuItems => {
       console.log("menu items changed")
       this.menuItems = menuItems;
     })
-
-    this.menuItemPickerFilterField?.changes.subscribe(() => {
-      console.log("change seen")
-      this.menuItemPickerFilterField?.first.nativeElement.focus()
-    })
-    //this.setupEventListeners()
   }
 
   isToday(): boolean
@@ -74,5 +75,7 @@ export class DayComponent implements OnInit {
     this.utilitiesService.documentClickedTarget$.subscribe(() => {
         this.menuItemPickerOpened = false;
     })
+
+    console.log(this.menuItemPickerFilterField)
   }
 }
