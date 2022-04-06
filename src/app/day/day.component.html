@@ -2,19 +2,20 @@
     <p class="uppercase text-sm text-center tracking-widest" [ngClass]="{'font-bold text-blue-800':isToday(), 'font-medium text-gray-400': !isToday()}">{{getWeekDayShort()}}</p>
     <h2 class="text-xl text-center" [ngClass]="{'font-bold text-blue-800':isToday(), 'font-medium': !isToday()}">{{getDateString()}}</h2>
     <hr>
-    <div class="relative z-10">
-        <button class="mt-4 h-12 flex justify-center items-center rounded cursor-pointer transition whitespace-pre-line text-center w-full" 
-                [ngClass]="{'bg-blue-800 hover:bg-blue-900 font-semibold text-white': day.menu_item, 'bg-gray-200 hover:bg-gray-300 text-gray-400 hover:text-gray-500 text-3xl': !day.menu_item}" 
-                (click)="openMenuItemPicker($event)" 
-                *ngIf="!menuItemPickerOpened">
-                    {{day.menu_item ? day.menu_item.title : '+'}}      
-        </button>
-        <div    class="mt-4 h-12 flex justify-center items-center rounded cursor-pointer transition whitespace-pre-line text-center border-blue-800 border-2" 
-                *ngIf="menuItemPickerOpened">
-                    <input type="text" class="w-full h-full">
-        </div>
-        <div class="w-full absolute rounded top-12 border-collapse" *ngIf="menuItemPickerOpened" #menuItemPickerFilterField>
-            <div class="h-12 border flex justify-center items-center rounded bg-white hover:bg-blue-800 hover:text-white font-semibold cursor-pointer" *ngFor="let menuItem of menuItems" (click)="planMenuItem(menuItem)">
+    <button class="mt-4 h-12 rounded cursor-pointer transition whitespace-pre-line text-center w-full" 
+            [ngClass]="{'bg-blue-800 hover:bg-blue-900 font-semibold text-white': day.menu_item, 'bg-gray-200 hover:bg-gray-300 text-gray-400 hover:text-gray-500 text-3xl': !day.menu_item}" 
+            (click)="openMenuItemPicker($event)" 
+            *ngIf="!menuItemPickerOpened">
+                {{day.menu_item ? day.menu_item.title : '+'}}      
+    </button>
+    <div class="relative" *ngIf="menuItemPickerOpened">
+        <input  class="mt-4 h-12 block rounded cursor-pointer transition whitespace-pre-line text-center w-full outline-none border-blue-900 border-2 font-semibold" 
+                appAutofocus 
+                [(ngModel)]="menuItemFilterString"/>
+        <div class="w-full absolute rounded top-12 border-collapse">
+            <div    class="h-12 border flex justify-center items-center rounded bg-white hover:bg-blue-800 hover:text-white font-semibold cursor-pointer" 
+                    *ngFor="let menuItem of menuItems | menuItemFilter: menuItemFilterString" 
+                    (click)="planMenuItem(menuItem)">
                 <span>{{menuItem.title}}</span>
             </div>
         </div>

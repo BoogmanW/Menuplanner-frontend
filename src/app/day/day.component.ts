@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DayService } from '../services/day.service';
 import { MenuItemService } from '../services/menu-item.service';
 import { UtilitiesService } from '../services/utilities.service';
@@ -10,24 +10,16 @@ import { MenuItem } from '../shared/models/menu-item';
   templateUrl: './day.component.html',
   styleUrls: ['./day.component.css']
 })
-export class DayComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class DayComponent implements OnInit {
 
   @Input() day?: Day;
-
-  @ViewChild('menuItemPickerFilterField', {static: false}) menuItemPickerFilterField? : ElementRef
 
   menuItemPickerOpened = false;
   menuItems : MenuItem[] = [];
 
-  constructor(private menuItemService: MenuItemService, private dayService: DayService, private utilitiesService : UtilitiesService) { }
-  
-  ngAfterViewInit(): void {
-    console.log("after view init")
-  }
+  menuItemFilterString: string;
 
-  ngAfterViewChecked(): void {
-    if (this.menuItemPickerFilterField) this.menuItemPickerFilterField.nativeElement.focus()
-  }
+  constructor(private menuItemService: MenuItemService, private dayService: DayService, private utilitiesService : UtilitiesService) { }
 
   ngOnInit(): void {
     this.menuItemService.menuItemsChanged$.subscribe(menuItems => {
@@ -75,7 +67,5 @@ export class DayComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this.utilitiesService.documentClickedTarget$.subscribe(() => {
         this.menuItemPickerOpened = false;
     })
-
-    console.log(this.menuItemPickerFilterField)
   }
 }

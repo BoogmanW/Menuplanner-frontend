@@ -9,8 +9,10 @@ import { ChevronLeftComponent } from './shared/icons/chevron-left/chevron-left.c
 import { ChevronRightComponent } from './shared/icons/chevron-right/chevron-right.component';
 import { WeekOverviewComponent } from './week-overview/week-overview.component';
 import { RecipeOverviewComponent } from './recipe-overview/recipe-overview.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DayComponent } from './day/day.component';
+import { AutofocusDirective } from './shared/directives/autofocus.directive';
+import { MenuItemFilterPipe } from './shared/pipes/menu-item-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,16 @@ import { DayComponent } from './day/day.component';
     ChevronRightComponent,
     WeekOverviewComponent,
     RecipeOverviewComponent,
-    DayComponent
+    DayComponent,
+    AutofocusDirective,
+    MenuItemFilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
