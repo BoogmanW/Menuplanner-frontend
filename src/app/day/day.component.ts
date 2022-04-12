@@ -19,6 +19,8 @@ export class DayComponent implements OnInit {
 
   menuItemFilterString: string;
 
+  commentInput: string;
+
   constructor(private menuItemService: MenuItemService, private dayService: DayService, private utilitiesService : UtilitiesService) { }
 
   ngOnInit(): void {

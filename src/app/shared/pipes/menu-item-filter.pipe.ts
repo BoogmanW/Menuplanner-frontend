@@ -12,11 +12,8 @@ export class MenuItemFilterPipe implements PipeTransform {
 
     if (!menuItemFilter) return menuItems;
 
-    console.log("Filter = " + menuItemFilter)
-    console.log(menuItems)
-
     return menuItems.filter(menuItem => {
-      return menuItem.title.includes(menuItemFilter)
+      return menuItem.title.toLowerCase().includes(menuItemFilter.toLowerCase())
     })
   }
 
