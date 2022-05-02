@@ -1,0 +1,13 @@
+<div class="relative overflow-visible">
+    <input  class="h-10 block rounded-md whitespace-pre-line text-center w-full outline-none font-semibold cursor-text border border-gray-300 shadow-sm"
+            [ngClass]="{'border-blue-800 ring-blue-800 ring-1': showMenuItemOptions}"
+            [(ngModel)]="menuItemFilterString"
+            (click)="!this.showMenuItemOptions && openMenuItemOptions($event)"/>
+    <div class="absolute w-full rounded top-12 max-h-50" *ngIf="showMenuItemOptions">
+        <div    class="h-10 border flex justify-center items-center rounded bg-white hover:bg-blue-800 hover:text-white font-semibold cursor-pointer" 
+                *ngFor="let menuItem of menuItems | menuItemFilter: menuItemFilterString" (click)="selectMenuItem(menuItem)"
+                >
+                <span>{{menuItem.title}}</span>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MenuItemPlanModalComponent } from '../menu-item-plan-modal/menu-item-plan-modal.component';
 import { DayService } from '../services/day.service';
 import { MenuItemService } from '../services/menu-item.service';
-import { UtilitiesService } from '../services/utilities.service';
 import { Day } from '../shared/models/day';
 import { MenuItem } from '../shared/models/menu-item';
 
@@ -12,22 +12,16 @@ import { MenuItem } from '../shared/models/menu-item';
 })
 export class DayComponent implements OnInit {
 
-  @Input() day?: Day;
+  @Input() day: Day;
 
-  menuItemPickerOpened = false;
-  menuItems : MenuItem[] = [];
-
-  menuItemFilterString: string;
+  @ViewChild(MenuItemPlanModalComponent) modal: MenuItemPlanModalComponent;
 
   commentInput: string;
+  menuItemPlanModalOpened: boolean;
 
-  constructor(private menuItemService: MenuItemService, private dayService: DayService, private utilitiesService : UtilitiesService) { }
+  constructor(private dayService: DayService, private menuItemService: MenuItemService) { }
 
   ngOnInit(): void {
-    this.menuItemService.menuItemsChanged$.subscribe(menuItems => {
-      console.log("menu items changed")
-      this.menuItems = menuItems;
-    })
   }
 
   isToday(): boolean
@@ -48,26 +42,32 @@ export class DayComponent implements OnInit {
     return this.day ? this.day.date.toLocaleDateString(undefined, options): "";
   }
 
-  planMenuItem(menuItem: MenuItem)
+  openMenuItemPlanModal()
+  {
+    this.menuItemPlanModalOpened = true; 
+  }
+
+  closeMenuItemPlanModal()
+  {
+    this.menuItemPlanModalOpened = false;
+  }
+
+  onMenuItemPlanModalCancel()
+  {
+    console.log("modal canceled :(")
+    this.closeMenuItemPlanModal();
+  }
+
+  onMenuItemPlanModalConfirm()
+  {
+    console.log("modal confirmed :)")
+  }
+
+  private planMenuItem(menuItem: MenuItem)
   {
     if (!this.day) return;
     this.dayService.setMenuItem(this.day.id, {'date': this.day.date, 'menuItemID': menuItem.id}).subscribe()
     this.day.menu_item = menuItem; 
     this.menuItemService.updateMenuItems();
-    this.menuItemPickerOpened = false;
-  }
-
-
-  openMenuItemPicker($event: MouseEvent)
-  {
-    this.menuItemPickerOpened = true
-    
-    // so clickevent to close picker wouldn't fire immediately
-    $event.stopPropagation();
-    
-    // listen to clickevent, click anywhere should close menuItemPicker
-    this.utilitiesService.documentClickedTarget$.subscribe(() => {
-        this.menuItemPickerOpened = false;
-    })
   }
 }

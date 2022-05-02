@@ -8,11 +8,13 @@ import { HeaderComponent } from './shared/header/header.component';
 import { ChevronLeftComponent } from './shared/icons/chevron-left/chevron-left.component';
 import { ChevronRightComponent } from './shared/icons/chevron-right/chevron-right.component';
 import { WeekOverviewComponent } from './week-overview/week-overview.component';
-import { RecipeOverviewComponent } from './recipe-overview/recipe-overview.component';
+import { MenuItemOverviewComponent } from './menu-item-overview/menu-item-overview.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DayComponent } from './day/day.component';
 import { AutofocusDirective } from './shared/directives/autofocus.directive';
 import { MenuItemFilterPipe } from './shared/pipes/menu-item-filter.pipe';
+import { MenuItemPlanModalComponent } from './menu-item-plan-modal/menu-item-plan-modal.component';
+import { AbstractModalComponent } from './shared/components/abstract-modal/abstract-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +23,12 @@ import { MenuItemFilterPipe } from './shared/pipes/menu-item-filter.pipe';
     ChevronLeftComponent,
     ChevronRightComponent,
     WeekOverviewComponent,
-    RecipeOverviewComponent,
+    MenuItemOverviewComponent,
     DayComponent,
     AutofocusDirective,
-    MenuItemFilterPipe
+    MenuItemFilterPipe,
+    MenuItemPlanModalComponent,
+    AbstractModalComponent
   ],
   imports: [
     BrowserModule,

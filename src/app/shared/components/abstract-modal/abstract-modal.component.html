@@ -1,0 +1,18 @@
+<div class="bg-black opacity-25 h-screen w-screen fixed top-0 left-0" (click)="cancel()">
+</div>
+
+<div class="h-screen w-screen fixed top-0 left-0 flex justify-center items-center">
+    <div class=" bg-white rounded-md flex-initial z-10 opacity-100">
+        <h2 class ="p-2 text-center text-lg font-semibold">Header</h2>
+        <div class="p-4">
+            <ng-content></ng-content>
+        </div>
+        
+        <div class="bg-gray-50 py-4 px-4 flex justify-end rounded-b-md">
+            <button class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white rounded font-semibold uppercase text-xs tracking-widest transition ease-in-out duration-150" type="button" (click)="cancel()">Annuleren</button>
+            <div class="px-2"></div>
+            <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded font-semibold uppercase text-xs tracking-widest transition ease-in-out duration-150" type="button" (click)="confirm()">Opslaan</button>
+        </div>
+    </div>
+</div>
+

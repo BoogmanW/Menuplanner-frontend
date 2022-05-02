@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RecipeOverviewComponent } from './recipe-overview/recipe-overview.component';
+import { MenuItemOverviewComponent } from './menu-item-overview/menu-item-overview.component';
 import { WeekOverviewComponent } from './week-overview/week-overview.component';
 
 const routes: Routes = [
   {path: '', component: WeekOverviewComponent },
-  {path: 'recipes', component: RecipeOverviewComponent}
+  {path: 'menuitems', component: MenuItemOverviewComponent}
 ];
 
 @NgModule({

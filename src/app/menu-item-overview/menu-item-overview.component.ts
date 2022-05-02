@@ -1,15 +1,14 @@
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MenuItemService } from '../services/menu-item.service';
 import { MenuItem } from '../shared/models/menu-item';
 
 @Component({
-  selector: 'app-recipe-overview',
-  templateUrl: './recipe-overview.component.html',
-  styleUrls: ['./recipe-overview.component.css']
+  selector: 'app-menu-item-overview',
+  templateUrl: './menu-item-overview.component.html',
+  styleUrls: ['./menu-item-overview.component.css']
 })
-export class RecipeOverviewComponent implements OnInit {
+export class MenuItemOverviewComponent implements OnInit {
 
   createMenuItemForm = this.formBuilder.group({
     "title": ["", Validators.required],
