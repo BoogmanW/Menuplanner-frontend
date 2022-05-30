@@ -11,49 +11,46 @@ import { MenuItem } from '../shared/models/menu-item';
   selector: 'app-menu-item-plan-modal',
   templateUrl: './menu-item-plan-modal.component.html',
   styleUrls: ['./menu-item-plan-modal.component.css'],
-  outputs: []
+  outputs: [],
 })
-export class MenuItemPlanModalComponent extends AbstractModalComponent implements OnInit {
-
-  @Input() day: Day
+export class MenuItemPlanModalComponent
+  extends AbstractModalComponent
+  implements OnInit
+{
+  @Input() day: Day;
   @Output() onCancel: EventEmitter<void>;
 
-  menuItems: MenuItem[]
+  menuItems: MenuItem[];
+  selectedMenuItem: MenuItem;
 
   menuItemFilterString: string;
-  showMenuItemOptions: boolean = false; 
+  showMenuItemOptions: boolean = false;
 
   planMenuItemForm = this.formBuilder.group({
-    "menuItem": ["", Validators.required],
-    "time": ["", Validators.required],
-    "comment": ["", Validators.required]
-  })
+    menuItemFilterString: ['', Validators.required],
+    time: ['', Validators.required],
+    comment: ['', Validators.required],
+  });
 
-  constructor(private dayService: DayService, private menuItemService: MenuItemService, private utilitiesService: UtilitiesService, private formBuilder: FormBuilder) {
+  constructor(
+    private menuItemService: MenuItemService,
+    private formBuilder: FormBuilder
+  ) {
     super();
+    // todo only show menuItemPicker if input is focused
   }
 
   ngOnInit(): void {
-    this.menuItemService.menuItemsChanged$.subscribe(menuItems => {
+    this.menuItemService.menuItemsChanged$.subscribe((menuItems) => {
       this.menuItems = menuItems;
-    })
-
-      // listen to clickevent, click anywhere should close menuItemPicker
-      this.utilitiesService.documentClickedTarget$.subscribe(() => {
-        if (this.showMenuItemOptions) this.showMenuItemOptions = false;
-    })
+    });
   }
 
-  openMenuItemOptions($event: MouseEvent)
-  {
-    this.showMenuItemOptions = true
-    
-    // stop propagation so clickevent to close picker wouldn't fire immediately
-    $event.stopPropagation();
+  selectMenuItem(menuItem: MenuItem) {
+    this.selectedMenuItem = menuItem;
   }
 
-  selectMenuItem(menuItem: MenuItem)
-  {
-    console.log(menuItem)
+  onPlanMenuItemFormSubmit() {
+    // todo send post request
   }
 }

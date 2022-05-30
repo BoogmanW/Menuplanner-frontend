@@ -1,13 +1,37 @@
 <div class="relative overflow-visible">
-    <input  class="h-10 block rounded-md whitespace-pre-line text-center w-full outline-none font-semibold cursor-text border border-gray-300 shadow-sm"
-            [ngClass]="{'border-blue-800 ring-blue-800 ring-1': showMenuItemOptions}"
-            [(ngModel)]="menuItemFilterString"
-            (click)="!this.showMenuItemOptions && openMenuItemOptions($event)"/>
-    <div class="absolute w-full rounded top-12 max-h-50" *ngIf="showMenuItemOptions">
-        <div    class="h-10 border flex justify-center items-center rounded bg-white hover:bg-blue-800 hover:text-white font-semibold cursor-pointer" 
-                *ngFor="let menuItem of menuItems | menuItemFilter: menuItemFilterString" (click)="selectMenuItem(menuItem)"
-                >
-                <span>{{menuItem.title}}</span>
-        </div>
+  <form [formGroup]="planMenuItemForm" (ngSubmit)="onPlanMenuItemFormSubmit()">
+    <!-- input should contain the selected menu item's title, or if there is no selected menu item then empty. The text in the input is the filterstring -->
+    <!-- when input is focused, the menuItem should be opened when there are only 5 options left. -->
+
+    <!-- no selected menuItem -> filter using this input -->
+    <input
+      class="focus:border-blue-800 focus:ring-blue-800 focus:ring-1 block h-10 w-full cursor-text whitespace-pre-line rounded-md border border-gray-300 bg-white text-center font-semibold shadow-sm outline-none placeholder:font-normal placeholder:italic"
+      *ngIf="!selectedMenuItem"
+      formControlName="menuItemFilterString"
+      placeholder="Enter Menu Item here..." />
+
+    <!-- Menu item Picker -->
+    <div
+      class="max-h-50 absolute top-12 w-full rounded"
+      *ngIf="!selectedMenuItem">
+      <div
+        class="flex h-10 cursor-pointer items-center justify-center rounded border bg-white font-semibold hover:bg-blue-800 hover:text-white"
+        *ngFor="
+          let menuItem of menuItems
+            | menuItemFilter: planMenuItemForm.value.menuItemFilterString
+        "
+        (click)="selectMenuItem(menuItem)">
+        <span>{{ menuItem.title }}</span>
+      </div>
     </div>
+
+    <!-- todo when this is clicked, forget the selected menuItem, this will cause the filter input to be visible -->
+    <div
+      class="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border border-gray-300 text-center font-semibold shadow-sm"
+      *ngIf="selectedMenuItem">
+      <span>
+        {{ selectedMenuItem.title }}
+      </span>
+    </div>
+  </form>
 </div>
