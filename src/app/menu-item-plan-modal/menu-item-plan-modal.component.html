@@ -1,37 +1,54 @@
-<div class="relative overflow-visible">
-  <form [formGroup]="planMenuItemForm" (ngSubmit)="onPlanMenuItemFormSubmit()">
-    <!-- input should contain the selected menu item's title, or if there is no selected menu item then empty. The text in the input is the filterstring -->
-    <!-- when input is focused, the menuItem should be opened when there are only 5 options left. -->
+<app-abstract-modal (cancel)="onCancel()" (confirm)="onConfirm()">
+  <div class="relative overflow-visible">
+    <form [formGroup]="planMenuItemForm" (ngSubmit)="onPlanMenuItemFormSubmit()">
+      <!-- input should contain the selected menu item's title, or if there is no selected menu item then empty. The text in the input is the filterstring -->
+      <!-- when input is focused, the menuItem should be opened when there are only 5 options left. -->
 
-    <!-- no selected menuItem -> filter using this input -->
-    <input
-      class="focus:border-blue-800 focus:ring-blue-800 focus:ring-1 block h-10 w-full cursor-text whitespace-pre-line rounded-md border border-gray-300 bg-white text-center font-semibold shadow-sm outline-none placeholder:font-normal placeholder:italic"
-      *ngIf="!selectedMenuItem"
-      formControlName="menuItemFilterString"
-      placeholder="Enter Menu Item here..." />
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700" for="menuItem">Menu Item</label>
+        <!-- no selected menuItem -> filter using this input -->
+        <input
+          class="w-full rounded-md border border-gray-300 px-2 py-1 text-center font-semibold shadow-sm outline-none placeholder:font-normal focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          formControlName="menuItem"
+          placeholder="Search Menu Item"
+          (focus)="onMenuItemFocused($event)"
+          (blur)="onMenuItemBlurred()"
+          #menuItemInput />
 
-    <!-- Menu item Picker -->
-    <div
-      class="max-h-50 absolute top-12 w-full rounded"
-      *ngIf="!selectedMenuItem">
-      <div
-        class="flex h-10 cursor-pointer items-center justify-center rounded border bg-white font-semibold hover:bg-blue-800 hover:text-white"
-        *ngFor="
-          let menuItem of menuItems
-            | menuItemFilter: planMenuItemForm.value.menuItemFilterString
-        "
-        (click)="selectMenuItem(menuItem)">
-        <span>{{ menuItem.title }}</span>
+        <!-- Menu item Picker-->
+        <div
+          class="max-h-50 absolute top-12 w-full overflow-hidden rounded border border-gray-300 bg-white shadow-sm"
+          *ngIf="showMenuItemPicker && filteredMenuItems && filteredMenuItems.length > 0">
+          <div
+            class="flex h-10 cursor-pointer items-center justify-center font-semibold outline-none hover:bg-blue-800 hover:text-white"
+            [ngClass]="{
+              'border-0 border-x-2 border-l-blue-800 border-r-white bg-gray-100': selectedMenuItemIndex == i
+            }"
+            *ngFor="let menuItem of filteredMenuItems; let i = index"
+            (click)="selectMenuItem(menuItem)"
+            #menuItemPickerElement>
+            <span>{{ menuItem.title }}</span>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- todo when this is clicked, forget the selected menuItem, this will cause the filter input to be visible -->
-    <div
-      class="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border border-gray-300 text-center font-semibold shadow-sm"
-      *ngIf="selectedMenuItem">
-      <span>
-        {{ selectedMenuItem.title }}
-      </span>
-    </div>
-  </form>
-</div>
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700" for="time">Time</label>
+        <input
+          type="time"
+          class="w-full rounded-md border border-gray-300 px-2 py-1 text-center shadow-sm outline-none placeholder:font-normal focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          formControlName="time"
+          placeholder="HH:mm" />
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700" for="time">Time</label>
+        <textarea
+          class="w-full rounded-md border border-gray-300 px-2 py-1 text-center shadow-sm outline-none placeholder:font-normal focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          formControlName="comment"
+          placeholder="Comment">
+        </textarea>
+      </div>
+    </form>
+  </div>
+</app-abstract-modal>

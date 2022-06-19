@@ -1,17 +1,25 @@
-<div class="p-2 mx-2 bg-white shadow rounded-lg border-2 border-gray-300" *ngIf="day">
-    <!-- <div class="float-left rounded-full h-2 w-2 bg-blue-800" *ngIf="isToday()"></div> -->
-    <p class="uppercase text-sm text-center tracking-widest" [ngClass]="{'font-bold text-blue-800':isToday(), 'font-medium text-gray-400': !isToday()}">{{getWeekDayShort()}}</p>
-    <h2 class="text-xl text-center" [ngClass]="{'font-bold text-blue-800':isToday(), 'font-medium': !isToday()}">{{getDateString()}}</h2>
-    <div class="p-2 pt-0">
-        <hr>
-        <button class="mt-4 h-12 rounded cursor-pointer transition whitespace-pre-line text-center w-full" 
-                [ngClass]="{'bg-blue-800 hover:bg-blue-900 font-semibold text-white': day.menu_item, 'bg-gray-200 hover:bg-gray-300 text-gray-400 hover:text-gray-500 text-3xl': !day.menu_item}" 
-                (click)="openMenuItemPlanModal()">
-                    {{day.menu_item ? day.menu_item.title : '+'}}      
-        </button>
-    </div>
+<div class="mx-2 rounded-lg border-2 border-gray-300 bg-white p-2 shadow" *ngIf="day">
+  <!-- <div class="float-left rounded-full h-2 w-2 bg-blue-800" *ngIf="isToday()"></div> -->
+  <p
+    class="text-center text-sm uppercase tracking-widest"
+    [ngClass]="{ 'font-bold text-blue-800': isToday(), 'font-medium text-gray-400': !isToday() }">
+    {{ getWeekDayShort() }}
+  </p>
+  <h2 class="text-center text-xl" [ngClass]="{ 'font-bold text-blue-800': isToday(), 'font-medium': !isToday() }">
+    {{ getDateString() }}
+  </h2>
+  <div class="p-2 pt-0">
+    <hr />
+    <button
+      class="mt-4 h-12 w-full cursor-pointer whitespace-pre-line rounded text-center transition"
+      [ngClass]="{
+        'bg-blue-800 font-semibold text-white hover:bg-blue-900': day.menu_item,
+        'bg-gray-200 text-3xl text-gray-400 hover:bg-gray-300 hover:text-gray-500': !day.menu_item
+      }"
+      (click)="openMenuItemPlanModal()">
+      {{ day.menu_item ? day.menu_item.title : "+" }}
+    </button>
+  </div>
 </div>
-<app-abstract-modal *ngIf="menuItemPlanModalOpened" 
-                    (onCancel)="onMenuItemPlanModalCancel()" (onConfirm)="onMenuItemPlanModalConfirm()">
-    <app-menu-item-plan-modal></app-menu-item-plan-modal>
-</app-abstract-modal>
+<span>{{ showMenuItemPlanModal }}</span>
+<app-menu-item-plan-modal *ngIf="showMenuItemPlanModal" [day]="day"></app-menu-item-plan-modal>

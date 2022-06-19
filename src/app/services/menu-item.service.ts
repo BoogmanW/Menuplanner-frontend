@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, BehaviorSubject, Observable } from 'rxjs';
 import { MenuItem } from '../shared/models/menu-item';

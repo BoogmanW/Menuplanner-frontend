@@ -19,7 +19,7 @@ import { AbstractModalComponent } from './shared/components/abstract-modal/abstr
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent, 
+    HeaderComponent,
     ChevronLeftComponent,
     ChevronRightComponent,
     WeekOverviewComponent,
@@ -28,16 +28,10 @@ import { AbstractModalComponent } from './shared/components/abstract-modal/abstr
     AutofocusDirective,
     MenuItemFilterPipe,
     MenuItemPlanModalComponent,
-    AbstractModalComponent
+    AbstractModalComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule],
+  providers: [MenuItemFilterPipe],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

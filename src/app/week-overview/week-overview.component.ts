@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DayService } from '../services/day.service';
-import { MenuItemService } from '../services/menu-item.service';
 import { Day } from '../shared/models/day';
-import { MenuItem } from '../shared/models/menu-item';
-
 @Component({
   selector: 'app-week-overview',
   templateUrl: './week-overview.component.html',
@@ -14,7 +11,7 @@ export class WeekOverviewComponent implements OnInit {
   week: Day[] = [];
   selectedWeekNumber: number = 0;
 
-  constructor(private dayService: DayService, private menuItemService: MenuItemService) { }
+  constructor(private dayService: DayService) { }
 
   ngOnInit(): void {
     this.dayService.selectedWeekChanged$.subscribe(week => { 

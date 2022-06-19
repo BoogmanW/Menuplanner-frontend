@@ -3,28 +3,20 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-abstract-modal',
   templateUrl: './abstract-modal.component.html',
-  styleUrls: ['./abstract-modal.component.css']
+  styleUrls: ['./abstract-modal.component.css'],
 })
 export class AbstractModalComponent implements OnInit {
+  @Output() confirm = new EventEmitter<void>(); // method to execute when confirm is clicked
+  @Output() cancel = new EventEmitter<void>(); // method to execute when cancel is clicked
+  constructor() {}
 
-  @Output() onConfirm = new EventEmitter<void>()  // method to execute when confirm is clicked
-  @Output() onCancel = new EventEmitter<void>()   // method to execute when cancel is clicked
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void { }
-
-  cancel()
-  {
-    console.log("cancel abstractmodal")
-    console.log(this.onCancel) 
-    this.onCancel.emit();
+  cancelClicked() {
+    this.cancel.emit();
   }
 
-  confirm()
-  {
-    console.log("confirm abstractmodal")
-    console.log(this.onConfirm) 
-    this.onConfirm.emit();
+  confirmClicked() {
+    this.confirm.emit();
   }
-
 }

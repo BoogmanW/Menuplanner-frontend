@@ -2,7 +2,6 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MenuItemPlanModalComponent } from '../menu-item-plan-modal/menu-item-plan-modal.component';
 import { DayService } from '../services/day.service';
 import { MenuItemService } from '../services/menu-item.service';
-import { UtilitiesService } from '../services/utilities.service';
 import { Day } from '../shared/models/day';
 import { MenuItem } from '../shared/models/menu-item';
 
@@ -17,12 +16,9 @@ export class DayComponent implements OnInit {
   @ViewChild(MenuItemPlanModalComponent) modal: MenuItemPlanModalComponent;
 
   commentInput: string;
-  menuItemPlanModalOpened: boolean;
+  showMenuItemPlanModal: boolean;
 
-  constructor(
-    private dayService: DayService,
-    private menuItemService: MenuItemService,
-  ) {}
+  constructor(private dayService: DayService, private menuItemService: MenuItemService) {}
 
   ngOnInit(): void {}
 
@@ -45,11 +41,11 @@ export class DayComponent implements OnInit {
   }
 
   openMenuItemPlanModal() {
-    this.menuItemPlanModalOpened = true;
+    this.showMenuItemPlanModal = true;
   }
 
   closeMenuItemPlanModal() {
-    this.menuItemPlanModalOpened = false;
+    this.showMenuItemPlanModal = false;
   }
 
   onMenuItemPlanModalCancel() {

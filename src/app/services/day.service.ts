@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ObservableLike, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Day } from '../shared/models/day';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
-import { MenuItem } from '../shared/models/menu-item';
 
 @Injectable({
   providedIn: 'root'

@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DayComponent } from './day.component';
@@ -8,7 +9,8 @@ describe('DayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DayComponent ]
+      declarations: [ DayComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   });
