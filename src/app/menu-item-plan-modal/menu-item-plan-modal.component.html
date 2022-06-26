@@ -1,4 +1,5 @@
-<app-abstract-modal (cancel)="onCancel()" (confirm)="onConfirm()">
+<!-- <app-abstract-modal (cancel)="onCancel()" (confirm)="onConfirm()"> -->
+<app-abstract-modal (cancel)="onCancelClicked()" (confirm)="onConfirmClicked()">
   <div class="relative overflow-visible">
     <form [formGroup]="planMenuItemForm" (ngSubmit)="onPlanMenuItemFormSubmit()">
       <!-- input should contain the selected menu item's title, or if there is no selected menu item then empty. The text in the input is the filterstring -->

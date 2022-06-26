@@ -22,4 +22,8 @@
   </div>
 </div>
 
-<app-menu-item-plan-modal [id]="'menuItemPlanModal'" [day]="day"></app-menu-item-plan-modal>
+<app-menu-item-plan-modal
+  [day]="day"
+  *ngIf="showMenuItemPlanModal"
+  (cancel)="onMenuItemPlanModalCancel()"
+  (confirm)="onMenuItemPlanModalConfirm()"></app-menu-item-plan-modal>

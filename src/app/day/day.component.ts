@@ -2,7 +2,6 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MenuItemPlanModalComponent } from '../menu-item-plan-modal/menu-item-plan-modal.component';
 import { DayService } from '../services/day.service';
 import { MenuItemService } from '../services/menu-item.service';
-import { ModalService } from '../services/modal.service';
 import { Day } from '../shared/models/day';
 import { MenuItem } from '../shared/models/menu-item';
 
@@ -16,14 +15,9 @@ export class DayComponent implements OnInit {
 
   @ViewChild(MenuItemPlanModalComponent) modal: MenuItemPlanModalComponent;
 
-  commentInput: string;
-  MENUITEM_PLAN_MODAL: string = 'menuItemPlanModal';
+  showMenuItemPlanModal: boolean;
 
-  constructor(
-    private dayService: DayService,
-    private menuItemService: MenuItemService,
-    private modalService: ModalService
-  ) {}
+  constructor(private dayService: DayService, private menuItemService: MenuItemService) {}
 
   ngOnInit(): void {}
 
@@ -46,22 +40,18 @@ export class DayComponent implements OnInit {
   }
 
   openMenuItemPlanModal() {
-    this.modalService.showModal(this.MENUITEM_PLAN_MODAL);
-  }
-
-  closeMenuItemPlanModal() {
-    this.modalService.cancelModal(this.MENUITEM_PLAN_MODAL);
+    this.showMenuItemPlanModal = true;
   }
 
   onMenuItemPlanModalCancel() {
-    // todo remove
     console.log('modal canceled :(');
-    this.closeMenuItemPlanModal();
+    this.showMenuItemPlanModal = false;
   }
 
   onMenuItemPlanModalConfirm() {
     // todo remove
     console.log('modal confirmed :)');
+    this.showMenuItemPlanModal = false;
   }
 
   private planMenuItem(menuItem: MenuItem) {
