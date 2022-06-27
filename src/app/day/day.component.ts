@@ -53,16 +53,4 @@ export class DayComponent implements OnInit {
     console.log('modal confirmed :)');
     this.showMenuItemPlanModal = false;
   }
-
-  private planMenuItem(menuItem: MenuItem) {
-    if (!this.day) return;
-    this.dayService
-      .setMenuItem(this.day.id, {
-        date: this.day.date,
-        menuItemID: menuItem.id,
-      })
-      .subscribe();
-    this.day.menu_item = menuItem;
-    this.menuItemService.updateMenuItems();
-  }
 }

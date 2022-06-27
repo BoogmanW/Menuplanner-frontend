@@ -1,7 +1,7 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DayService } from '../services/day.service';
 import { MenuItemService } from '../services/menu-item.service';
 import { Day } from '../shared/models/day';
 import { MenuItem } from '../shared/models/menu-item';
@@ -32,6 +32,7 @@ export class MenuItemPlanModalComponent implements OnInit {
   selectedMenuItemIndex: number;
 
   planMenuItemForm = this.formBuilder.group({
+    menuItemTitle: ['', Validators.required],
     menuItem: ['', Validators.required],
     time: ['', Validators.required],
     comment: ['', Validators.required],
@@ -40,7 +41,8 @@ export class MenuItemPlanModalComponent implements OnInit {
   constructor(
     private menuItemService: MenuItemService,
     private formBuilder: FormBuilder,
-    private menuItemFilterPipe: MenuItemFilterPipe
+    private menuItemFilterPipe: MenuItemFilterPipe,
+    private dayService: DayService
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +80,7 @@ export class MenuItemPlanModalComponent implements OnInit {
   }
 
   onMenuItemFocused($event: any) {
-    this.menuItemInputSubscription = this.planMenuItemForm.controls['menuItem'].valueChanges.subscribe((value) => {
+    this.menuItemInputSubscription = this.planMenuItemForm.controls['menuItemTitle'].valueChanges.subscribe((value) => {
       this.filteredMenuItems = this.menuItemFilterPipe.transform(this.allMenuItems, value);
     });
     $event.target.select();
@@ -90,19 +92,39 @@ export class MenuItemPlanModalComponent implements OnInit {
   }
 
   onMenuItemBlurred() {
-    this.planMenuItemForm.patchValue({ menuItem: this.selectedMenuItem?.title });
+    this.planMenuItemForm.patchValue({
+      menuItemTitle: this.selectedMenuItem?.title,
+      menuItem: this.selectedMenuItem,
+    });
     this.showMenuItemPicker = false;
     this.menuItemInputSubscription.unsubscribe();
   }
 
   selectMenuItem(menuItem: MenuItem) {
     this.selectedMenuItem = menuItem;
-    this.planMenuItemForm.patchValue({ menuItem: this.selectedMenuItem?.title });
+    this.planMenuItemForm.patchValue({
+      menuItemTitle: this.selectedMenuItem.title,
+      menuItem: this.selectedMenuItem,
+    });
     this.menuItemInput.nativeElement.blur();
   }
 
   onConfirmClicked() {
     console.log('confirm clicked');
+    if (!this.day) return;
+    this.dayService
+      .updateDay(this.day.id, {
+        date: this.day.date,
+        menuItemID: this.planMenuItemForm.value['menuItem'].id,
+        time: this.planMenuItemForm.value['time'],
+        comment: this.planMenuItemForm.value['comment'],
+      })
+      .subscribe();
+    // set properties on local day to see changes immediately
+    this.day.menu_item = this.planMenuItemForm.value['menuItem'];
+    this.day.time = this.planMenuItemForm.value['time'];
+    this.day.comment = this.planMenuItemForm.value['comment'];
+    this.menuItemService.updateMenuItems();
     this.confirm.emit();
   }
 
