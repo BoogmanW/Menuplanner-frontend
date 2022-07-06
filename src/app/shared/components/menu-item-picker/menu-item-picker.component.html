@@ -1,0 +1,28 @@
+<label class="block text-sm font-medium text-gray-700" for="menuItem">Menu Item</label>
+<!-- no selected menuItem -> filter using this input -->
+<input
+  class="w-full rounded-md border border-gray-300 px-2 py-1 text-center font-semibold shadow-sm outline-none placeholder:font-normal focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+  placeholder="Search Menu Item"
+  (focus)="onInputFocused($event)"
+  (blur)="onInputBlurred()"
+  (click)="selectedMenuItemIndex = -1"
+  [(ngModel)]="menuItemInputValue"
+  (ngModelChange)="onInputChanged($event)"
+  #menuItemInput />
+
+<!-- Menu item Picker-->
+<div
+  class="max-h-50 absolute top-12 w-full overflow-hidden rounded border border-gray-300 bg-white shadow-sm"
+  *ngIf="showMenuItemPicker && filteredMenuItems && filteredMenuItems.length > 0">
+  <div
+    class="flex h-10 cursor-pointer items-center justify-center font-semibold outline-none"
+    [ngClass]="{
+      'menuItem-hover': selectedMenuItemIndex == i
+    }"
+    *ngFor="let menuItem of filteredMenuItems; let i = index"
+    (click)="selectMenuItem(menuItem)"
+    (mousedown)="onMouseDownMenuItem($event)"
+    (mouseenter)="selectedMenuItemIndex = i">
+    <span>{{ menuItem.title }}</span>
+  </div>
+</div>

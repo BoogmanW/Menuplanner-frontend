@@ -2,38 +2,8 @@
 <app-abstract-modal (cancel)="onCancelClicked()" (confirm)="onConfirmClicked()">
   <div class="relative overflow-visible">
     <form [formGroup]="planMenuItemForm" (ngSubmit)="onPlanMenuItemFormSubmit()">
-      <!-- input should contain the selected menu item's title, or if there is no selected menu item then empty. The text in the input is the filterstring -->
-      <!-- when input is focused, the menuItem should be opened when there are only 5 options left. -->
-
       <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700" for="menuItem">Menu Item</label>
-        <!-- no selected menuItem -> filter using this input -->
-        <input
-          class="w-full rounded-md border border-gray-300 px-2 py-1 text-center font-semibold shadow-sm outline-none placeholder:font-normal focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          formControlName="menuItemTitle"
-          placeholder="Search Menu Item"
-          (focus)="onMenuItemFocused($event)"
-          (blur)="onMenuItemBlurred()"
-          #menuItemInput />
-
-        <!-- Menu item Picker-->
-        <div
-          class="max-h-50 absolute top-12 w-full overflow-hidden rounded border border-gray-300 bg-white shadow-sm"
-          *ngIf="showMenuItemPicker && filteredMenuItems && filteredMenuItems.length > 0">
-          <div
-            class="flex h-10 cursor-pointer items-center justify-center font-semibold outline-none hover:bg-blue-800 hover:text-white"
-            [ngClass]="{
-              'border-0 border-x-2 border-l-blue-800 border-r-white bg-gray-100': selectedMenuItemIndex == i
-            }"
-            *ngFor="let menuItem of filteredMenuItems; let i = index"
-            (click)="selectMenuItem(menuItem)"
-            #menuItemPickerElement>
-            <span>{{ menuItem.title }}</span>
-          </div>
-        </div>
-
-        <!-- testing  todo remove-->
-        <span>{{ planMenuItemForm.value | json }}</span>
+        <app-menu-item-picker [allMenuItems]="allMenuItems" formControlName="menuItem"></app-menu-item-picker>
       </div>
 
       <div class="mb-6">

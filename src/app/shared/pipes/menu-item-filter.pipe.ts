@@ -6,7 +6,7 @@ import { MenuItem } from '../models/menu-item';
 })
 export class MenuItemFilterPipe implements PipeTransform {
   transform(menuItems: MenuItem[], menuItemFilter: string): MenuItem[] {
-    if (menuItemFilter == null || menuItemFilter.length == 0) return [];
+    if (menuItemFilter == null || menuItemFilter.length == 0) return menuItems;
     var menuItemList: MenuItem[];
     menuItemList = menuItems.filter((menuItem) => {
       return menuItem.title.toLowerCase().includes(menuItemFilter.toLowerCase());

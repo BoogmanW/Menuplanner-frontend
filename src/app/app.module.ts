@@ -15,6 +15,7 @@ import { AutofocusDirective } from './shared/directives/autofocus.directive';
 import { MenuItemFilterPipe } from './shared/pipes/menu-item-filter.pipe';
 import { MenuItemPlanModalComponent } from './menu-item-plan-modal/menu-item-plan-modal.component';
 import { AbstractModalComponent } from './shared/components/abstract-modal/abstract-modal.component';
+import { MenuItemPickerComponent } from './shared/components/menu-item-picker/menu-item-picker.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AbstractModalComponent } from './shared/components/abstract-modal/abstr
     MenuItemFilterPipe,
     MenuItemPlanModalComponent,
     AbstractModalComponent,
+    MenuItemPickerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule],
   providers: [MenuItemFilterPipe],
